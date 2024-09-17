@@ -24,12 +24,28 @@ const blogFinder = async (req, res, next) => {
   next()
 }
 
-router.delete('/:id', blogFinder, async (req, res) => {
+router.delete('/:id', blogFinder, async (req, res, next) => {
   try {
-    await req.blog.destroy()
-    return res.status(204).end()
-  } catch (error) {
-    return res.status(400).json({ error })
+    if (req.blog) {
+      await req.blog.destroy()
+      res.status(204).end()
+    } else res.status(404).end()
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+router.put('/:id', blogFinder, async (req, res, next) => {
+  try {
+    if (req.blog) {
+      req.blog.likes = req.body.likes
+      await req.blog.save()
+      res.json(req.blog)
+    } else {
+      res.status(404).end()
+    }
+  } catch (exception) {
+    next(exception)
   }
 })
 
