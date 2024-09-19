@@ -6,8 +6,15 @@ const errorHandler = (error, request, response, next) => {
   }
   if (error.name === 'SequelizeConnectionError') {
     return response.status(503).json({ error: 'Database connection error' })
+  } 
+  if (error.name === 'SequelizeValidationError') {
+    return response.status(400).json({ error: error.message })
   }
-
+  if (error.name === 'SequelizeUniqueConstraintError') {
+    const field = error.errors[0].path
+    const message = `${field.charAt(0).toUpperCase() + field.slice(1)} already exists`
+    return response.status(400).json({ error: message })
+  }
   next(error)
 }
 
