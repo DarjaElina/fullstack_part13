@@ -8,7 +8,7 @@ const errorHandler = (error, request, response, next) => {
     return response.status(503).json({ error: 'Database connection error' })
   } 
   if (error.name === 'SequelizeValidationError') {
-    return response.status(400).json({ error: error.message })
+    return response.status(400).json({ error: error.message,  })
   }
   if (error.name === 'SequelizeUniqueConstraintError') {
     const field = error.errors[0].path
