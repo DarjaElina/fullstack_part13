@@ -1,22 +1,7 @@
 const router = require('express').Router()
 const { Blog, User } = require('../models')
-const { SECRET } = require('../utils/config')
-const jwt = require('jsonwebtoken')
 const { Op } = require('sequelize')
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-    } catch {
-      return res.status(401).json({ error: 'token invalid' })
-    }
-  } else {
-    return res.status(401).json({ error: 'token missing' })
-  }
-  next()
-}
+const { tokenExtractor } = require('../utils/middleware')
 
 router.get('/', async (req, res) => {
   const where = {}
@@ -75,7 +60,7 @@ router.delete('/:id', blogFinder,tokenExtractor,  async (req, res, next) => {
         await req.blog.destroy()
         res.status(204).end()
       } else {
-        return res.status(400).json({ error: 'blog can be deleted only by its creator' })
+        return res.status(403).json({ error: 'blog can be deleted only by its creator' })
       }
   } catch (exception) {
     next(exception)

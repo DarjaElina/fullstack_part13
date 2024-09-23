@@ -1,9 +1,9 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFubmFAZXhhbXBsZS5jb20iLCJpZCI6MSwiaWF0IjoxNzI2OTM5MzU5fQ.pUYVzK0AGasrSpsqPGuoARS90KJWsTz9z8lz2v4T1No
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFubmFAZXhhbXBsZS5jb20iLCJpZCI6MSwiaWF0IjoxNzI3MDgwNzg0fQ.0X-lZbt8UzVIgv4kcjeL5OM01ZhDWRXF8C-ORSTcdMs
 
 {
-  "title": "test",
-  "url": "test.com",
+  "title": "test1",
+  "url": "test1.com",
   "year": 1700
 }
